@@ -1,17 +1,7 @@
 import React from "react";
 import styles from "./BookCard.module.css";
 import Link from "next/link";
-
-export interface Book {
-  id: string;
-  title: string;
-  author: string;
-  subTitle?: string;
-  imageLink: string;
-  duration: string;
-  averageRating: number;
-  subscriptionRequired: boolean | string | number;
-}
+import {Book} from "@/app/lib/booksApi"
 
 interface BookCardProps {
   book: Book;
@@ -19,11 +9,7 @@ interface BookCardProps {
 
 export default function BookCard({ book }: BookCardProps) {
   const requiresSub =
-    book.subscriptionRequired === true ||
-    book.subscriptionRequired === "true" ||
-    book.subscriptionRequired === 1 ||
-    book.subscriptionRequired === "1";
-
+    book.subscriptionRequired === true 
   return (
     <div className={styles["for-you__recommended--books"]}>
       <Link

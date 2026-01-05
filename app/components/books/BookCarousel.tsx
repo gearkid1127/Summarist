@@ -2,7 +2,8 @@
 
 import { useRef } from "react";
 import styles from "./BookCarousel.module.css";
-import BookCard, {type Book} from "@/app/components/books/BookCard";
+import BookCard from "@/app/components/books/BookCard";
+import {Book} from "@/app/lib/booksApi"
 
 
 interface BookCarouselProps {

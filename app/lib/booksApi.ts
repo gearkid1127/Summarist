@@ -29,9 +29,18 @@ export type Book = {
   keyIdeas: number;
   type: string;
   status: string;
+  summary: string;
   bookDescription: string;
   authorDescription: string;
+  subscriptionRequired: boolean;
+  tags: string [];
+  duration: string;
+
 };
+
+function normalizeSubscriptionRequired(value: unknown): boolean {
+  return value === true || value === "true" || value === 1 || value === "1";
+}
 
 // Small helper to keep the fetch code DRY
 async function fetchBooks(url: string): Promise<Book[]> {
