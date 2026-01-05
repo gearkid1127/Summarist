@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./BookCard.module.css";
 import Link from "next/link";
 
-interface Book {
+export interface Book {
   id: string;
   title: string;
   author: string;

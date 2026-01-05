@@ -2,13 +2,8 @@
 
 import { useRef } from "react";
 import styles from "./BookCarousel.module.css";
-import BookCard from "@/app/components/books/BookCard";
+import BookCard, {type Book} from "@/app/components/books/BookCard";
 
-type Book = {
-  id: string;
-  // keep loose here so it works with your API shape
-  [key: string]: any;
-};
 
 interface BookCarouselProps {
   books: Book[];
