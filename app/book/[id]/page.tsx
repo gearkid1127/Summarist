@@ -60,7 +60,7 @@ export default async function BookPage({ params }: BookPageProps) {
                       <path d="M686.7 638.6L544.1 535.5V288c0-4.4-3.6-8-8-8H488c-4.4 0-8 3.6-8 8v275.4c0 2.6 1.2 5 3.3 6.5l165.4 120.6c3.6 2.6 8.6 1.8 11.2-1.7l28.6-39c2.6-3.7 1.8-8.7-1.8-11.2z"></path>
                     </svg>
                   </div>
-                  <div className={styles["inner-book__duration"]}>{book.duration}</div>
+                  <div className={styles["inner-book__duration"]}>10:00</div>
                 </div>
                 <div className={styles["inner-book__description"]}>
                   <div className={styles["inner-book__icon"]}>
