@@ -15,10 +15,13 @@ export default function NavBar() {
 
   const pathname = usePathname();
 
+  if (pathname === "/choose-plan") {
+    return null;
+  }
+
   const appRoutes = ["/for-you", "/library", "/settings"];
   const prefixRoutes = ["/book/"];
   const isAppRoute = appRoutes.includes(pathname);
-  
 
   const handleLogout = async () => {
     try {
@@ -30,7 +33,8 @@ export default function NavBar() {
     <div>
       <nav className="nav">
         <div className="nav__wrapper">
-          {isAppRoute || prefixRoutes ? (
+          {isAppRoute ||
+          prefixRoutes.some((prefix) => pathname.startsWith(prefix)) ? (
             <div className="nav__search">
               <input
                 type="text"
