@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import styles from "./page.module.css";
+import { auth } from "@/firebase";
 
 export default function Plans() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -16,7 +17,7 @@ export default function Plans() {
     const res = await fetch("/api/stripe/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ priceId }),
+      body: JSON.stringify({ priceId, uid: auth.currentUser?.uid }),
     });
 
     const data = await res.json();
