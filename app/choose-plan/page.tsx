@@ -135,7 +135,7 @@ export default function Plans() {
                   Premium Plus Yearly
                 </div>
                 <div className={styles["plan__card--price"]}>
-                  $100,000.00/year
+                  $100.00/year
                 </div>
                 <div className={styles["plan__card--text"]}>
                   7-day free trial included
@@ -162,7 +162,7 @@ export default function Plans() {
                   Premium Monthly
                 </div>
                 <div className={styles["plan__card--price"]}>
-                  $1,000.00 a month
+                  $10.00 a month
                 </div>
                 <div className={styles["plan__card--text"]}>
                   No trial included
