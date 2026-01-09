@@ -6,7 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { priceId } = body;
+  const { priceId, uid } = body;
   
 
   if (!priceId) {
@@ -16,6 +16,11 @@ export async function POST(req: Request) {
     );
   }
 
+   if (!uid) {
+    return new Response(JSON.stringify({ error: "Missing uid" }), { status: 400 });
+  }
+
+
   const origin = req.headers.get("origin");
   if (!origin) {
     return NextResponse.json({ error: "Missing origin header" }, { status: 400 });
@@ -24,6 +29,8 @@ export async function POST(req: Request) {
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
     line_items: [{ price: priceId, quantity: 1 }],
+    client_reference_id:  uid,
+    metadata:{uid},
     success_url: `${origin}/choose-plan?success=1`,
     cancel_url: `${origin}/choose-plan?canceled=1`,
   });
