@@ -3,12 +3,16 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase";
+
 
 
 // 1️⃣ Shape of the data we’ll expose
 type AuthContextValue = {
   user: User | null;
   loading: boolean;
+  isPremium: boolean;
 };
 
 // 2️⃣ Create the context (empty for now)
@@ -18,21 +22,34 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isPremium, setIsPremium] = useState(false);
+
 
   useEffect(() => {
     // 4️⃣ Subscribe to Firebase auth changes
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      console.log("Auth state changed:", firebaseUser);
-      setUser(firebaseUser);
-      setLoading(false);
-    });
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+  setUser(firebaseUser);
+
+  if (!firebaseUser) {
+    setIsPremium(false);
+    setLoading(false);
+    return;
+  }
+
+  const snap = await getDoc(doc(db, "users", firebaseUser.uid));
+  const data = snap.exists() ? snap.data() : null;
+
+  setIsPremium(Boolean(data?.isPremium));
+  setLoading(false);
+});
+
 
     // 5️⃣ Cleanup on unmount
     return () => unsubscribe();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, loading, isPremium }}>
       {children}
     </AuthContext.Provider>
   );

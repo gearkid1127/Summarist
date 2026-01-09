@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 
   await db.collection("users").doc(uid).set(
     {
-      isPro: true,
+      isPremium: true,
       stripeCustomerId: session.customer ?? null,
       stripeSubscriptionId: session.subscription ?? null,
       updatedAt: new Date().toISOString(),
