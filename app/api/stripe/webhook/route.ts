@@ -1,5 +1,6 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
+import { adminDb } from "@/app/lib/firebaseAdmin"; 
 
 export const runtime = "nodejs"; // Stripe SDK needs Node runtime
 
@@ -30,16 +31,24 @@ export async function POST(req: Request) {
   }
 
   // Checkpoint: confirm we can receive + verify events
-  if (event.type === "checkout.session.completed") {
-    const session = event.data.object as Stripe.Checkout.Session;
-    console.log("✅ checkout.session.completed", {
-      id: session.id,
-      customer: session.customer,
-      clientReferenceId: session.client_reference_id,
-    });
-  } else {
-    console.log("ℹ️ Stripe event:", event.type);
-  }
+ if (event.type === "checkout.session.completed") {
+  const session = event.data.object as Stripe.Checkout.Session;
+
+  const uid = session.metadata?.uid;
+  if (!uid) return NextResponse.json({ received: true }); // nothing to update
+
+  const db = adminDb();
+
+  await db.collection("users").doc(uid).set(
+    {
+      isPro: true,
+      stripeCustomerId: session.customer ?? null,
+      stripeSubscriptionId: session.subscription ?? null,
+      updatedAt: new Date().toISOString(),
+    },
+    { merge: true }
+  );
 
   return NextResponse.json({ received: true });
+}
 }
