@@ -34,15 +34,11 @@ export async function POST(req: Request) {
   }
 
   // Checkpoint: confirm we can receive + verify events
-  if (event.type === "checkout.session.completed") {
-    const session = event.data.object as Stripe.Checkout.Session;
+  if (event.type === "customer.subscription.created") {
+    const sub = event.data.object as Stripe.Subscription;
 
-    const uid =
-      (session.client_reference_id as string | null) ??
-      session.metadata?.uid ??
-      null;
-
-    if (!uid) return NextResponse.json({ received: true }); // nothing to update
+    const uid = sub.metadata?.uid ?? null;
+    if (!uid) return NextResponse.json({ received: true });
 
     const db = adminDb();
 
@@ -52,8 +48,8 @@ export async function POST(req: Request) {
       .set(
         {
           isPremium: true,
-          stripeCustomerId: session.customer ?? null,
-          stripeSubscriptionId: session.subscription ?? null,
+          stripeCustomerId: sub.customer ?? null,
+          stripeSubscriptionId: sub.id ?? null,
           updatedAt: new Date().toISOString(),
         },
         { merge: true }
@@ -62,6 +58,5 @@ export async function POST(req: Request) {
     return NextResponse.json({ received: true });
   }
   // Always ack other Stripe events so Stripe doesn't retry forever
-return NextResponse.json({ received: true });
-
+  return NextResponse.json({ received: true });
 }
