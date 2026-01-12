@@ -42,6 +42,18 @@ export async function POST(req: Request) {
 
     const db = adminDb();
 
+    // 🔎 DEBUG: force a known write so Firestore shows up
+await db.collection("_debug").doc("lastWebhook").set(
+  {
+    hit: true,
+    type: event.type,
+    id: event.id,
+    created: event.created,
+    ts: new Date().toISOString(),
+  },
+  { merge: true }
+);
+
     await db
       .collection("users")
       .doc(uid)
