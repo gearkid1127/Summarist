@@ -13,7 +13,10 @@ type AuthContextValue = {
   user: User | null;
   loading: boolean;
   isPremium: boolean;
+  
 };
+
+
 
 // 2️⃣ Create the context (empty for now)
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -38,6 +41,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const snap = await getDoc(doc(db, "users", firebaseUser.uid));
   const data = snap.exists() ? snap.data() : null;
+
+  console.log("AUTH CHECK → uid:", firebaseUser.uid);
+  console.log("AUTH CHECK → Firestore doc exists:", snap.exists());
+  console.log("AUTH CHECK → Firestore isPremium:", data?.isPremium);
 
   setIsPremium(Boolean(data?.isPremium));
   setLoading(false);

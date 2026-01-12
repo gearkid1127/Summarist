@@ -2,22 +2,30 @@
 
 import React, { useState } from "react";
 import styles from "./page.module.css";
-import { auth } from "@/firebase";
+import {useAuth} from "@/providers/AuthProvider"
 
 export default function Plans() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [activePlan, setActivePlan] = useState<"monthly" | "yearly">("monthly");
+  const { user, loading } = useAuth();
+  
+
 
   const yearlyPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_YEARLY!;
   const monthlyPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_MONTHLY!;
 
   async function handleCheckout() {
+     if (loading || !user) {
+      console.error("User not ready yet");
+      return;
+    }
     const priceId = activePlan === "yearly" ? yearlyPriceId : monthlyPriceId;
+    
 
     const res = await fetch("/api/stripe/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ priceId, uid: auth.currentUser?.uid }),
+      body: JSON.stringify({ priceId, uid: user.uid }),
     });
 
     const data = await res.json();
