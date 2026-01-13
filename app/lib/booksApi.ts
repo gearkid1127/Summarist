@@ -33,10 +33,38 @@ export type Book = {
   bookDescription: string;
   authorDescription: string;
   subscriptionRequired: boolean;
-  tags: string [];
+  tags: string[];
   duration: string;
-
 };
+
+// lib/booksApi.ts
+
+export type SearchBook = {
+  id: string;
+  title: string;
+  author: string;
+  imageLink: string;
+  averageRating?: number;
+  totalRating?: number;
+};
+
+const SEARCH_BASE = process.env.NEXT_PUBLIC_BOOKS_SEARCH_API!;
+
+
+export async function searchBooks(search: string, signal?: AbortSignal) {
+  const q = search.trim();
+  if (!q) return [];
+
+  const url = `${SEARCH_BASE}?search=${encodeURIComponent(q)}`;
+
+  const res = await fetch(url, { signal, cache: "no-store" });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`searchBooks failed ${res.status}: ${text.slice(0, 200)}`);
+  }
+
+  return (await res.json()) as SearchBook[];
+}
 
 function normalizeSubscriptionRequired(value: unknown): boolean {
   return value === true || value === "true" || value === 1 || value === "1";

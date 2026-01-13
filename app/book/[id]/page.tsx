@@ -1,27 +1,30 @@
-
 import styles from "./page.module.css";
 import { getBookById } from "@/app/lib/booksApi";
 import { roundToNearestTenth } from "@/app/components/ratingHelper/ratingHelper";
 import Link from "next/link";
+import BookGateClient from "./BookGateClient";
 
 type BookPageProps = {
   params: Promise<{ id: string }>;
 };
 
-
 export default async function BookPage({ params }: BookPageProps) {
-  const { id } = await params; 
-  const book = await getBookById(id)
-  
+  const { id } = await params;
+  const book = await getBookById(id);
 
   return (
     <div className={styles.row}>
+      <BookGateClient
+        subscriptionRequired={(book as any).subscriptionRequired}
+      />
       <div className={styles.container}>
         <div className={styles["inner__wrapper"]}>
           <div className={styles["inner__book"]}>
             <div className={styles["inner-book__title"]}>{book.title}</div>
             <div className={styles["inner-book__author"]}>{book.author}</div>
-            <div className={styles["inner-book__subtitle"]}>{book.subTitle}</div>
+            <div className={styles["inner-book__subtitle"]}>
+              {book.subTitle}
+            </div>
             <div className={styles["inner-book__wrapper"]}>
               <div className={styles["inner-book__description--wrapper"]}>
                 <div className={styles["inner-book__description"]}>
@@ -39,10 +42,10 @@ export default async function BookPage({ params }: BookPageProps) {
                     </svg>
                   </div>
                   <div className={styles["inner-book__overall--rating"]}>
-                   {book.averageRating}
+                    {book.averageRating}
                   </div>
                   <div className={styles["inner-book__total--rating"]}>
-                   ({book.totalRating})
+                    ({book.totalRating})
                   </div>
                 </div>
                 <div className={styles["inner-book__description"]}>
@@ -120,22 +123,23 @@ export default async function BookPage({ params }: BookPageProps) {
                 </div>
                 <div className={styles["inner-book__read--text"]}>Read</div>
               </button>
-              <Link href={book.audioLink}><button className={styles["inner-book__read--btn"]}>
-                <div className={styles["inner-book__read--icon"]}>
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    strokeWidth="0"
-                    viewBox="0 0 1024 1024"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M842 454c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8 0 140.3-113.7 254-254 254S258 594.3 258 454c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8 0 168.7 126.6 307.9 290 327.6V884H326.7c-13.7 0-24.7 14.3-24.7 32v36c0 4.4 2.8 8 6.2 8h407.6c3.4 0 6.2-3.6 6.2-8v-36c0-17.7-11-32-24.7-32H548V782.1c165.3-18 294-158 294-328.1zM512 624c93.9 0 170-75.2 170-168V232c0-92.8-76.1-168-170-168s-170 75.2-170 168v224c0 92.8 76.1 168 170 168zm-94-392c0-50.6 41.9-92 94-92s94 41.4 94 92v224c0 50.6-41.9 92-94 92s-94-41.4-94-92V232z"></path>
-                  </svg>
-                </div>
-                <div className={styles["inner-book__read--text"]}>Listen</div>
-              </button>
+              <Link href={book.audioLink}>
+                <button className={styles["inner-book__read--btn"]}>
+                  <div className={styles["inner-book__read--icon"]}>
+                    <svg
+                      stroke="currentColor"
+                      fill="currentColor"
+                      strokeWidth="0"
+                      viewBox="0 0 1024 1024"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M842 454c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8 0 140.3-113.7 254-254 254S258 594.3 258 454c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8 0 168.7 126.6 307.9 290 327.6V884H326.7c-13.7 0-24.7 14.3-24.7 32v36c0 4.4 2.8 8 6.2 8h407.6c3.4 0 6.2-3.6 6.2-8v-36c0-17.7-11-32-24.7-32H548V782.1c165.3-18 294-158 294-328.1zM512 624c93.9 0 170-75.2 170-168V232c0-92.8-76.1-168-170-168s-170 75.2-170 168v224c0 92.8 76.1 168 170 168zm-94-392c0-50.6 41.9-92 94-92s94 41.4 94 92v224c0 50.6-41.9 92-94 92s-94-41.4-94-92V232z"></path>
+                    </svg>
+                  </div>
+                  <div className={styles["inner-book__read--text"]}>Listen</div>
+                </button>
               </Link>
             </div>
             <div className={styles["inner-book__bookmark"]}>
@@ -164,18 +168,22 @@ export default async function BookPage({ params }: BookPageProps) {
               <div className={styles["inner-book__tag"]}>tag here</div>
             </div>
             <div className={styles["inner-book__book--description"]}>
-                {book.bookDescription}
+              {book.bookDescription}
             </div>
             <div className={styles["inner-book__secondary--title"]}>
-                About the author
+              About the author
             </div>
             <div className={styles["inner-book__author--description"]}>
-                {book.authorDescription}
+              {book.authorDescription}
             </div>
           </div>
           <div className={styles["inner-book__img-wrapper"]}>
             <figure className={styles["book__image--wrapper"]}>
-                <img src={book.imageLink} alt="" className={styles["book__image"]} />
+              <img
+                src={book.imageLink}
+                alt=""
+                className={styles["book__image"]}
+              />
             </figure>
           </div>
         </div>

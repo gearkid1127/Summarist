@@ -72,9 +72,9 @@ export default function NavBar() {
 
                 {!loading && user && (
                   <li className="nav__list nav__list--user">
-                    <span className="nav__user-name">
-                      Hi, {user.displayName || "User"}
-                    </span>
+                    <Link href={"for-you"}><span className="nav__user-name">
+                      My Account
+                    </span></Link>
                     <button onClick={handleLogout}>logout</button>
                   </li>
                 )}

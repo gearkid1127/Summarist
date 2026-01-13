@@ -18,6 +18,7 @@ export default function Plans() {
   }, [loading, isPremium, router]);
 
   if (loading) return null;
+  if (user && isPremium) return null;
 
   const yearlyPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_YEARLY!;
   const monthlyPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_MONTHLY!;

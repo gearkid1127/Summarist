@@ -425,6 +425,7 @@ Authorization Modal
 
 .nav__user-name {
   padding: 0 0.5rem;
+  margin-right: 1rem;
 }
 
 .nav__search {
