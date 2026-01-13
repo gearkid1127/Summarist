@@ -46,9 +46,10 @@ export type SearchBook = {
   imageLink: string;
   averageRating?: number;
   totalRating?: number;
+  duration: string
 };
 
-const SEARCH_BASE = process.env.NEXT_PUBLIC_BOOKS_SEARCH_API!;
+const SEARCH_BASE = process.env.NEXT_PUBLIC_API_SEARCH!;
 
 
 export async function searchBooks(search: string, signal?: AbortSignal) {

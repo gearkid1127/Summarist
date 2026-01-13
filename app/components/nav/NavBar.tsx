@@ -8,11 +8,13 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/firebase";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import SearchBar from "./SearchBar";
+
 
 export default function NavBar() {
   const { user, loading } = useAuth();
   const dispatch = useDispatch();
-
+  
   const pathname = usePathname();
 
   if (pathname === "/choose-plan") {
@@ -36,11 +38,7 @@ export default function NavBar() {
           {isAppRoute ||
           prefixRoutes.some((prefix) => pathname.startsWith(prefix)) ? (
             <div className="nav__search">
-              <input
-                type="text"
-                className="nav__search-input"
-                placeholder="Search for books"
-              />
+              <SearchBar  />
               <div className="search__icon">
                 <svg
                   stroke="currentColor"
@@ -72,9 +70,9 @@ export default function NavBar() {
 
                 {!loading && user && (
                   <li className="nav__list nav__list--user">
-                    <Link href={"for-you"}><span className="nav__user-name">
-                      My Account
-                    </span></Link>
+                    <Link href={"for-you"}>
+                      <span className="nav__user-name">My Account</span>
+                    </Link>
                     <button onClick={handleLogout}>logout</button>
                   </li>
                 )}
