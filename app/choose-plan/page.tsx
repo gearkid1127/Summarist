@@ -1,26 +1,33 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import {useAuth} from "@/providers/AuthProvider"
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/providers/AuthProvider";
 
 export default function Plans() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [activePlan, setActivePlan] = useState<"monthly" | "yearly">("monthly");
-  const { user, loading } = useAuth();
-  
+  const { user, loading, isPremium } = useAuth();
+  const router = useRouter();
 
+  useEffect(() => {
+    if (!loading && isPremium) {
+      router.replace("/for-you");
+    }
+  }, [loading, isPremium, router]);
+
+  if (loading) return null;
 
   const yearlyPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_YEARLY!;
   const monthlyPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_MONTHLY!;
 
   async function handleCheckout() {
-     if (loading || !user) {
+    if (loading || !user) {
       console.error("User not ready yet");
       return;
     }
     const priceId = activePlan === "yearly" ? yearlyPriceId : monthlyPriceId;
-    
 
     const res = await fetch("/api/stripe/checkout", {
       method: "POST",
@@ -142,9 +149,7 @@ export default function Plans() {
                 <div className={styles["plan__card--title"]}>
                   Premium Plus Yearly
                 </div>
-                <div className={styles["plan__card--price"]}>
-                  $100.00/year
-                </div>
+                <div className={styles["plan__card--price"]}>$100.00/year</div>
                 <div className={styles["plan__card--text"]}>
                   7-day free trial included
                 </div>
@@ -183,9 +188,7 @@ export default function Plans() {
                   {buttonText}
                 </button>
               </span>
-              <div className={styles["plan__disclaimer"]}>
-                {disclaimerText}
-              </div>
+              <div className={styles["plan__disclaimer"]}>{disclaimerText}</div>
             </div>
             <div className={styles["faq__wrapper"]}>
               <div className={styles["accordion__card"]}>
