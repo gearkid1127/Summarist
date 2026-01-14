@@ -75,3 +75,29 @@ export default function BookCard({ book }: BookCardProps) {
     </div>
   );
 }
+
+export function BookCardSkeleton() {
+  return (
+    <div className={`${styles["for-you__recommended--books"]} ${styles.skeletonCard}`}>
+      <div className={styles["for-you__recommended--books-link"]}>
+        <figure className={styles["book__img--wrapper"]}>
+          <div className={`${styles.skeletonBlock} ${styles.skeletonImg}`} />
+        </figure>
+
+        <div className={`${styles.skeletonBlock} ${styles.skeletonTitle}`} />
+        <div className={`${styles.skeletonBlock} ${styles.skeletonAuthor}`} />
+        <div className={`${styles.skeletonBlock} ${styles.skeletonSubtitle}`} />
+
+        <div className={styles["recommended__book--details-wrapper"]}>
+          <div className={styles["recommended__book--details"]}>
+            <div className={`${styles.skeletonBlock} ${styles.skeletonMeta}`} />
+          </div>
+          <div className={styles["recommended__book--details"]}>
+            <div className={`${styles.skeletonBlock} ${styles.skeletonMeta}`} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+

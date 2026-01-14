@@ -1,3 +1,5 @@
+
+
 .row {
   margin-left: 18rem;
   margin-top: 4rem; 
@@ -7,6 +9,68 @@
 .container {
   width: 75%;
 }
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeletonBlock {
+  background: linear-gradient(
+    90deg,
+    #e6e6e6 25%,
+    #f2f2f2 37%,
+    #e6e6e6 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.4s ease infinite;
+  border-radius: 0.5rem;
+}
+
+.skeletonCard {
+  pointer-events: none;
+}
+
+.skeletonSubtitle {
+  height: 1rem;
+  width: 60%;
+  margin-bottom: 1rem;
+}
+
+.skeletonBookline {
+  height: 0.75rem;
+  width: 40%;
+  margin-bottom: 1.5rem;
+}
+
+.skeletonImg {
+  width: 140px;
+  height: 200px;
+  border-radius: 0.75rem;
+}
+
+.skeletonTitle {
+  height: 1.25rem;
+  width: 70%;
+  margin-bottom: 0.75rem;
+}
+
+.skeletonAuthor {
+  height: 1rem;
+  width: 50%;
+  margin-bottom: 1rem;
+}
+
+.skeletonMeta {
+  height: 0.9rem;
+  width: 35%;
+}
+
+
 
 .foryou__title {
   font-size: 1.5rem;
@@ -94,6 +158,8 @@ width: 60%;
     scroll-snap-type: x;
     margin-bottom: 2rem;
 }
+
+
 
 @media (max-width:768px) {
   /* .selected__bookcontent {

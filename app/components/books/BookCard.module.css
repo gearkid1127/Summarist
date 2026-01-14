@@ -96,3 +96,43 @@
     align-items: center;
     border-radius: 20px;
 }
+
+/* =========================
+   BookCard Skeleton Styles
+   ========================= */
+
+.skeletonCard {
+  pointer-events: none;
+}
+
+.skeletonBlock {
+  background: linear-gradient(
+    90deg,
+    #ececec 25%,
+    #f5f5f5 37%,
+    #ececec 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.4s ease infinite;
+  border-radius: 6px;
+}
+
+/* Image */
+.skeletonImg {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 8px;
+}
+
+/* Text */
+.skeletonTitle {
+  height: 14px;
+  margin-top: 12px;
+  width: 90%;
+}
+
+.skeletonAuthor {
+  height: 12px;
+  margin-top: 8px;
+  width: 70%;
+}
