@@ -177,7 +177,7 @@ export default async function BookPage({ params }: BookPageProps) {
               {book.authorDescription}
             </div>
           </div>
-          <div className={styles["inner-book__img-wrapper"]}>
+          <div className={styles["inner-book__img--wrapper"]}>
             <figure className={styles["book__image--wrapper"]}>
               <img
                 src={book.imageLink}

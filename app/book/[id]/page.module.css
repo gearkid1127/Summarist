@@ -171,6 +171,7 @@
 .book__image--wrapper {
     width: 10.75rem;
     height: 10.75rem;
+    margin-right: 27rem;
 }
 
 .book__image {
@@ -180,15 +181,46 @@
 
 
 @media (max-width: 992px) {
-    .inner-book--img-wrapper {
-        display: flex;
-        justify-content: center;
-    }
+   
     .inner__wrapper {
         flex-direction: column;
         gap: 2rem;
     }
     .inner__book {
         order: 1;
+    }
+    .inner-book__book--description {
+        max-width: 400px;
+        flex-wrap: wrap;
+    }
+    .inner-book__author--description {
+         max-width: 400px;
+        flex-wrap: wrap;
+    }
+
+    .book__image--wrapper {
+        width: 20rem;
+        height: 20rem;
+    }
+
+    .inner-book__img--wrapper {
+        display: flex;
+        justify-content: center;
+
+    }
+}
+
+@media (max-width: 768px) {
+    .row {
+        margin-left: 5rem;
+    }
+
+    .inner-book__book--description {
+        max-width: 300px;
+        flex-wrap: wrap;
+    }
+    .inner-book__author--description {
+         max-width: 300px;
+        flex-wrap: wrap;
     }
 }

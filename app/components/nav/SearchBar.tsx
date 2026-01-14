@@ -11,6 +11,8 @@ export default function SearchBar() {
 
   const abortRef = useRef<AbortController | null>(null);
 
+ 
+
   useEffect(() => {
     const q = query.trim();
 
