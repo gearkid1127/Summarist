@@ -2,6 +2,8 @@ import { AiFillFileText, AiFillBulb, AiFillAudio } from "react-icons/ai";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { BiCrown } from "react-icons/bi";
 import { RiLeafLine } from "react-icons/ri";
+import OpenLoginButton from "@/app/components/auth/OpenLoginButton";
+import Link from "next/link";
 
 
 export default function Home() {
@@ -23,7 +25,8 @@ export default function Home() {
                 <br className="remove--tablet" />
                 and even people who don’t like to read.
               </div>
-              <button className="btn home__cta--btn">Login</button>
+              <Link href="/for-you"><OpenLoginButton className="btn home__cta--btn"></OpenLoginButton>
+              </Link>
             </div>
             <figure className="landing__image--mask">
               <img src="/assets/landing.png" alt="landing" />

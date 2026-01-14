@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./BookCard.module.css";
 import Link from "next/link";
 import {Book} from "@/app/lib/booksApi"
+import AudioDuration from "./AudioDuration";
 
 interface BookCardProps {
   book: Book;
@@ -48,7 +49,7 @@ export default function BookCard({ book }: BookCardProps) {
               </svg>
             </div>
             <div className={styles["recommended__book--details-text"]}>
-              {book.duration}
+              <AudioDuration audioLink={book.audioLink} />
             </div>
           </div>
           <div className={styles["recommended__book--details"]}>

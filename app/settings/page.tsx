@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { useAuth } from "@/providers/AuthProvider";
 import styles from "./page.module.css";
+import { useDispatch } from "react-redux";
+import { openLogin } from "@/redux/authModalSlice";
 
 export default function SettingsPage() {
   const { user, loading, isPremium } = useAuth();
+  const dispatch = useDispatch();
 
   if (loading) return null; // or a spinner if you want
 
@@ -24,9 +27,13 @@ export default function SettingsPage() {
           <div className={styles.loginText}>
             Log in to your account to see your details.
           </div>
-          <Link href="/">
-            <button className={styles.loginBtn}>Login</button>
-          </Link>
+          <button
+            type="button"
+            className={styles.loginBtn}
+            onClick={() => dispatch(openLogin())}
+          >
+            Login
+          </button>
         </div>
       </div>
     );

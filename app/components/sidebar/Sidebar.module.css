@@ -58,6 +58,10 @@
   height: 24px;
 }
 
+.disabled {
+  cursor: no-drop;
+}
+
 
 /* mobile behavior */
 @media (max-width: 768px) {
